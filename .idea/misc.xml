@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Timer/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.14" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Timer/app/src/main/res/drawable/ic_baseline_stop_24.xml" value="0.14" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Timer/app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
     </option>
