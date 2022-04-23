@@ -14,7 +14,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton buttonStart;
+    FloatingActionButton buttonStop;
+    FloatingActionButton buttonPause;
     EditText editText;
+
+    CountDownTimer timer;
+    boolean timerRunning;
+    long timeLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,25 +28,64 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonStart = findViewById(R.id.button_start);
+        buttonStop = findViewById(R.id.button_stop);
+        buttonPause = findViewById(R.id.button_pause);
         editText = findViewById(R.id.editTextNumber);
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               long seconds = Long.parseLong(String.valueOf(editText.getText()));
-                CountDownTimer timer = new CountDownTimer(seconds * 1000,1000) {
-                    @Override
-                    public void onTick(long l) {
-                        editText.setText(Long.toString(l/1000));
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                };
-                timer.start();
+              startTimer();
+              buttonPause.setVisibility(View.VISIBLE);
+              buttonStop.setVisibility(View.VISIBLE);
             }
         });
+
+        buttonPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(timerRunning){
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            }
+        });
+
+        buttonStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetTimer();
+            }
+        });
+    }
+
+    private void startTimer(){
+        timeLeft = Long.parseLong(String.valueOf(editText.getText()));
+        timer = new CountDownTimer(timeLeft*1000, 1000) {
+            @Override
+            public void onTick(long l) {
+                timeLeft = l;
+                editText.setText(Long.toString(l/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                timerRunning = false;
+            }
+        }.start();
+        timerRunning = true;
+    }
+
+    private void pauseTimer(){
+        timer.cancel();
+        timerRunning = false;
+    }
+
+    private void resetTimer(){
+        timer.cancel();
+        timerRunning = false;
+        buttonStop.setVisibility(View.INVISIBLE);
+        buttonPause.setVisibility(View.INVISIBLE);
     }
 }
